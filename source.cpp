@@ -12,6 +12,12 @@ const ll MAX_N = 100000;
 const ll MAX_DEPTH = 19;
 const ll MOD = 998244353;
 
+// Функция для предподсчета
+void prepare() {
+
+}
+
+// Алгебра
 #pragma region
 //Быстрое возведение в степень
 ll fastPower(ll a, ll b) {
@@ -20,6 +26,21 @@ ll fastPower(ll a, ll b) {
     return a * power(a, b - 1) % MOD;
 }
 
+// НОД
+ll gcd(ll a, ll b) {
+  if (b < a) swap(a, b);
+  if (a == 0) return b;
+  return gcd(b % a, a);
+}
+
+//НОК
+ll lcm(ll a, ll b) {
+  return a * b / gcd(a, b);
+}
+#pragma endregion 
+
+// Комибинаторика
+#pragma region
 // Найти обратное по модулю
 ll inv(ll a) {
     return power(a, MOD - 2);
@@ -29,18 +50,15 @@ ll inv(ll a) {
 ll c(ll n, ll k) {
     return fact[n] * inv(fact[k] * fact[n - k] % MOD) % MOD;
 }
-
-// Функция для предподсчета
-void prepare() {
-
-}
 #pragma endregion 
 
-// Графы
-#pragma region
+
 vector<vector<int>> binup(MAXN, vector<int>(MAX_DEPTH));
 vector<vector<int>> graph(MAXN);
 vector<int> depth(MAXN);
+// Графы
+#pragma region
+
 
 // Нахождение наименьшего общего предка
 int lca(int v, int u) {
@@ -61,9 +79,9 @@ int lca(int v, int u) {
 }
 
 // Нахождение наименьшего общего предка
-int la(int v, int k) {
+ll la(ll v, ll k) {
   if (k == 0) return v;
-  for (int i = MAX_DEPTH-1; i >= 0; --i) {
+  for (ll i = MAX_DEPTH-1; i >= 0; --i) {
     if ((1 << i) <= k) {
       k -= (1 << i);
       v = binup[v][i];
@@ -72,6 +90,10 @@ int la(int v, int k) {
   return v;
 }
 #pragma endregion 
+
+
+
+
 
 void solveA() {
 
