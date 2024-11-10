@@ -48,6 +48,23 @@ ll lcm(ll a, ll b)
 {
 	return a * b / gcd(a, b);
 }
+
+// n-ое чисел Фиббоначи
+ll fibonacci(long long n) {
+	if (n == 0) return 0;
+	long long a = 1, b = 1, c = 0, d = 1, t1, t2;
+	for (n--; n > 0; n /= 2) {
+		if (n % 2) {
+			t1 = (a * c + b * c) % MOD;
+			b = (a * d + b * d) % MOD;
+			a = t1;
+		}
+		t1 = (c * c + d * d) % MOD;
+		t2 = (c * d + d * c) % MOD;
+		c = t1, d = t2;
+	}
+	return a;
+}
 #pragma endregion
 
 // Комибинаторика
