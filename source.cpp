@@ -8,13 +8,25 @@ using namespace ::std;
 #define NO "NO\n"
 #define end "\n"
 
-const ll MAX_N = 100000;
+const ll MAX_N = 500001;
 const ll MAX_DEPTH = 19;
 const ll MOD = 998244353;
+
+const ll MAX_FACT_N = 1000000;
+vector<long long> FACT(MAX_FACT_N);
 
 // Функция для предподсчета
 void prepare()
 {
+  FACT[0] = 1;
+  for (int i = 1; i < MAX_FACT_N; ++i)
+    FACT[i] = FACT[i - 1] * i % MOD;
+}
+
+// Очистить структуры данных
+void clearAllStructures()
+{
+
 }
 
 // Алгебра
@@ -112,40 +124,48 @@ ll la(ll v, ll k)
 // Геометрия
 #pragma region
 // Точка
-struct Point{
-    int x, y;
- 
-    Point(){}
-    Point(int x0, int y0){
-        x = x0;
-        y = y0;
-    }
- 
-    int operator*(Point other){
-        return x * other.x + y * other.y;
-    }
- 
-    int operator^(Point other){
-        return x * other.y - y * other.x;
-    }
- 
-    Point operator+(Point &other){
-        return Point(x + other.x, y + other.y);
-    }
- 
-    Point operator-(Point &other){
-        return Point(x - other.x, y - other.y);
-    }
+struct Point
+{
+  int x, y;
+
+  Point() {}
+  Point(int x0, int y0)
+  {
+    x = x0;
+    y = y0;
+  }
+
+  int operator*(Point other)
+  {
+    return x * other.x + y * other.y;
+  }
+
+  int operator^(Point other)
+  {
+    return x * other.y - y * other.x;
+  }
+
+  Point operator+(Point &other)
+  {
+    return Point(x + other.x, y + other.y);
+  }
+
+  Point operator-(Point &other)
+  {
+    return Point(x - other.x, y - other.y);
+  }
 };
- 
-ostream &operator<<(ostream &output, const Point &p) {
-    output << p.x << " " << p.y;
-    return output;
+
+ostream &operator<<(ostream &output, const Point &p)
+{
+  output << p.x << " " << p.y;
+  return output;
 }
- 
-istream &operator>>(istream &input, Point &p) {
-    input >> p.x >> p.y;
-    return input;
+
+istream &operator>>(istream &input, Point &p)
+{
+  input >> p.x >> p.y;
+  return input;
 }
 #pragma endregion
 
@@ -185,7 +205,6 @@ struct Dsu
     p[u] = v;
   }
 };
-
 
 #pragma endregion
 
@@ -249,6 +268,7 @@ signed main()
 
   while (tt--)
   {
+    clearAllStructures();
     solveA();
   }
 }
