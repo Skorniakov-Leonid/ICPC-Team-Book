@@ -5,12 +5,11 @@ using namespace ::std;
 #define ll long long
 #define YES "YES\n"
 #define NO "NO\n"
-#define end "\n"
 
+const ll INF = (1ll << 60);
 const ll MAX_N = 500001;
 const ll MAX_DEPTH = 19;
 const ll MOD = 998244353;
-
 const ll MAX_FACT_N = 1000000;
 vector<long long> FACT(MAX_FACT_N);
 
@@ -62,18 +61,18 @@ ll inv(ll a)
 // C из n по k
 ll c(ll n, ll k)
 {
-	return fact[n] * inv(fact[k] * fact[n - k] % MOD) % MOD;
+	return FACT[n] * inv(FACT[k] * FACT[n - k] % MOD) % MOD;
 }
 #pragma endregion
 
-// Графы
-#pragma region
+
 vector<vector<ll>> binup(MAX_N, vector<ll>(MAX_DEPTH));
 vector<vector<ll>> graph(MAX_N);
-vector<bool> was(MAX_N, false)
-vector<ll> top();
+vector<bool> was(MAX_N, false);
+vector<ll> topSort(MAX_N);
 vector<ll> depth(MAX_N);
-
+// Графы
+#pragma region
 // Нахождение наименьшего общего предка
 int lca(int v, int u)
 {
@@ -83,7 +82,7 @@ int lca(int v, int u)
 		swap(v, u);
 	for (int i = MAX_DEPTH - 1; i >= 0; --i)
 	{
-		if (d[binup[u][i]] >= d[v])
+		if (depth[binup[u][i]] >= depth[v])
 			u = binup[u][i];
 	}
 	if (v == u)
@@ -127,10 +126,10 @@ void topsort(ll v)
 					continue;
 				dfs_(u, dfs_);
 			}
-			top.push_back(v);
+			topSort.push_back(v);
 		};
 	dfs_(v, dfs_);
-	reverse(top.begin(), top.end());
+	reverse(topSort.begin(), topSort.end());
 }
 #pragma endregion
 
@@ -190,7 +189,7 @@ struct Dsu
 	ll n;
 	vector<ll> p, sz;
 
-	dsu(int n0)
+	Dsu(int n0)
 	{
 		n = n0;
 		p.resize(n);
@@ -287,7 +286,7 @@ struct SegmentTree
 		if (qr <= l || r <= ql)
 		{
 			Node res;
-			res.x = inf;
+			res.x = INF;
 			return res;
 		}
 		if (ql <= l && r <= qr)
@@ -338,7 +337,7 @@ struct SegmentTree
 void clearAllStructures()
 {
 	was.clear();
-	top.clear();
+	topSort.clear();
 }
 
 void solveA()
