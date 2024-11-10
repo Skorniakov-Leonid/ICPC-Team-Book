@@ -26,7 +26,8 @@ void prepare()
 // Очистить структуры данных
 void clearAllStructures()
 {
-
+  was.clear();
+  topsort.clear();
 }
 
 // Алгебра
@@ -75,9 +76,11 @@ ll c(ll n, ll k)
 
 // Графы
 #pragma region
-vector<vector<int>> binup(MAXN, vector<int>(MAX_DEPTH));
-vector<vector<int>> graph(MAXN);
-vector<int> depth(MAXN);
+vector<vector<ll>> binup(MAXN, vector<ll>(MAX_DEPTH));
+vector<vector<ll>> graph(MAXN);
+vector<bool> was(MAXN, false) 
+vector<ll> topsort();
+vector<ll> depth(MAXN);
 
 // Нахождение наименьшего общего предка
 int lca(int v, int u)
@@ -118,6 +121,20 @@ ll la(ll v, ll k)
     }
   }
   return v;
+}
+
+// Топологическая сортировка
+void topsort(ll v) {
+    auto dfs_ = [&](int v, auto&& dfs_)->void{
+        was[v] = 1;
+        for (auto u : graph[v]) {
+            if (was[u]) continue;
+            dfs_(u, dfs_);
+        }
+        top.push_back(v);
+    };
+    dfs_(v, dfs_);
+    reverse(top.begin(), top.end());
 }
 #pragma endregion
 
