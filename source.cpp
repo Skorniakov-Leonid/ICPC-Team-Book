@@ -26,17 +26,61 @@ const ll MAX_N = 500001;
 const ll MAX_DEPTH = 19;
 const ll MOD = 998244353;
 const ll MAX_FACT_N = 1000000;
-vector<long long> FACT(MAX_FACT_N);
 
-// Функция для предподсчета
-void prepare() {
+vector<long long> FACT(MAX_FACT_N);
+vector<bool> isPrime(MAX_N, 1);
+vector<int> primeNums;
+vector<int> primeDivisor(MAX_N, 0);
+
+// Алгебра
+#pragma region
+void factorials() {
     FACT[0] = 1;
     for (int i = 1; i < MAX_FACT_N; ++i)
         FACT[i] = FACT[i - 1] * i % MOD;
 }
 
-// Алгебра
-#pragma region
+// Решето эратосфена
+void eratos() {
+    isPrime[0] = 0;
+    isPrime[1] = 0;
+    primeNums.push_back(2);
+    for (int i = 4; i < MAX_N; i += 2) isPrime[i] = 0;
+    for (int i = 3; i < MAX_N; i += 2) {
+        if (isPrime[i]) {
+            primeNums.push_back(i);
+            for (int j = i * i; j < MAX_N; j += i) {
+                isPrime[j] = 0;
+            }
+        }
+    }
+}
+
+// Решето эратосфена за n
+void eratos_n() {
+    for (int k = 2; k < MAX_N; k++) {
+        if (primeDivisor[k] == 0) {
+            primeDivisor[k] = k;
+            primeNums.push_back(k);
+        }
+        for (int x : primeNums) {
+            if (x > primeDivisor[k] || 1ll * x * k > MAX_N)
+                break;
+            primeDivisor[x * k] = x;
+        }
+    }
+}
+
+// Факторизация числа
+vector<int> factor(int v) {
+    vector<int> f;
+    while (primeDivisor[v] != 0) {
+        f.push_back(primeDivisor[v]);
+        v /= primeDivisor[v];
+    }
+    return f;
+}
+
 // Быстрое возведение в степень
 ll fastPower(ll a, ll b) {
     if (b == 0)
@@ -325,6 +369,12 @@ struct SegmentTree {
 };
 
 #pragma endregion
+
+// Функция для предподсчета
+void prepare() {
+    factorials();
+    eratos_n();
+}
 
 // Очистить структуры данных
 void clearAllStructures() {
