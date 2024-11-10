@@ -22,13 +22,6 @@ void prepare()
 		FACT[i] = FACT[i - 1] * i % MOD;
 }
 
-// Очистить структуры данных
-void clearAllStructures()
-{
-	was.clear();
-	topsorted.clear();
-}
-
 // Алгебра
 #pragma region
 // Быстрое возведение в степень
@@ -37,8 +30,8 @@ ll fastPower(ll a, ll b)
 	if (b == 0)
 		return 1;
 	if (b % 2 == 0)
-		return power(a * a % MOD, b / 2);
-	return a * power(a, b - 1) % MOD;
+		return fastPower(a * a % MOD, b / 2);
+	return a * fastPower(a, b - 1) % MOD;
 }
 
 // НОД
@@ -63,7 +56,7 @@ ll lcm(ll a, ll b)
 // Найти обратное по модулю
 ll inv(ll a)
 {
-	return power(a, MOD - 2);
+	return fastPower(a, MOD - 2);
 }
 
 // C из n по k
@@ -78,7 +71,7 @@ ll c(ll n, ll k)
 vector<vector<ll>> binup(MAX_N, vector<ll>(MAX_DEPTH));
 vector<vector<ll>> graph(MAX_N);
 vector<bool> was(MAX_N, false)
-vector<ll> topsorted();
+vector<ll> top();
 vector<ll> depth(MAX_N);
 
 // Нахождение наименьшего общего предка
@@ -340,6 +333,13 @@ struct SegmentTree
 };
 
 #pragma endregion
+
+// Очистить структуры данных
+void clearAllStructures()
+{
+	was.clear();
+	top.clear();
+}
 
 void solveA()
 {
