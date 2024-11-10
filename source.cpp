@@ -9,7 +9,11 @@ using namespace ::std;
 // Утилити
 #pragma region
 void print(string txt, bool isEndl = false) {
-    cout << txt << isEndl ? '\n' : endl;
+    if (isEndl) {
+        cout << txt << '\n';
+    } else {
+        cout << txt << endl;
+    }
 }
 
 void printYes() {
@@ -422,7 +426,7 @@ signed main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
     cout.tie(0);
-    prepare();
+    // prepare();
 
     int tt = 1;
     cin >> tt;
