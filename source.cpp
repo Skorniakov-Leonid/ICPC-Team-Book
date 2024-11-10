@@ -6,6 +6,7 @@ using namespace ::std;
 #define YES "YES\n"
 #define NO "NO\n"
 
+#pragma region HELP
 // Утилити
 #pragma region
 void print(string txt, bool isEndl = false) {
@@ -385,6 +386,7 @@ void clearAllStructures() {
     was.clear();
     topSort.clear();
 }
+#pragma endregion
 
 void solveA() {
 }
