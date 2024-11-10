@@ -13,11 +13,11 @@ void print(string txt, bool isEndl = false) {
 }
 
 void printYes() {
-    cout << 'YES';
+    cout << "YES\n";
 }
 
 void printNo() {
-    cout << 'NO';
+    cout << "NO\n";
 }
 #pragma endregion
 
