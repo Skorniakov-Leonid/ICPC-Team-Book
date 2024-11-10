@@ -49,21 +49,26 @@ ll lcm(ll a, ll b)
 	return a * b / gcd(a, b);
 }
 
-// n-ое чисел Фиббоначи
-ll fibonacci(long long n) {
-	if (n == 0) return 0;
-	long long a = 1, b = 1, c = 0, d = 1, t1, t2;
-	for (n--; n > 0; n /= 2) {
-		if (n % 2) {
-			t1 = (a * c + b * c) % MOD;
-			b = (a * d + b * d) % MOD;
-			a = t1;
+// n-ое число Фибоначчи
+ll fibonacci(int n)
+{
+	ll a = 1, ta, b = 1, tb, c = 1, rc = 0,  tc, d = 0, rd = 1;
+	while (n)
+	{
+		if (n & 1)
+		{
+			tc = rc;
+			rc = rc*a + rd*c;
+			rd = tc*b + rd*d;
 		}
-		t1 = (c * c + d * d) % MOD;
-		t2 = (c * d + d * c) % MOD;
-		c = t1, d = t2;
+		ta = a; tb = b; tc = c;
+		a = a*a  + b*c;
+		b = ta*b + b*d;
+		c = c*ta + d*c;
+		d = tc*tb+ d*d;
+		n >>= 1;
 	}
-	return a;
+	return rc;
 }
 #pragma endregion
 
@@ -415,9 +420,11 @@ signed main()
 	int tt = 1;
 	cin >> tt;
 
-	while (tt--)
-	{
-		clearAllStructures();
-		solveA();
-	}
+	cout << fibonacci(tt);
+
+	// while (tt--)
+	// {
+	// 	clearAllStructures();
+	// 	solveA();
+	// }
 }
